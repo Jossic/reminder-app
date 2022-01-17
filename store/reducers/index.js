@@ -1,4 +1,4 @@
-import { ADD_PROJECT } from '../actions';
+import { ADD_NOTE, ADD_PROJECT } from '../actions';
 
 const initialState = {
 	notes: [],
@@ -11,6 +11,11 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				projects: [action.project, ...state.projects],
+			};
+		case ADD_NOTE:
+			return {
+				...state,
+				notes: [action.note, ...state.notes],
 			};
 		default:
 			return state;

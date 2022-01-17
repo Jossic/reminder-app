@@ -58,7 +58,9 @@ const ProjectsScreen = ({ navigation }) => {
 						renderItem={({ item }) => (
 							<TouchableOpacity
 								activeOpacity={0.8}
-								onPress={() => navigation.navigate('Project')}>
+								onPress={() =>
+									navigation.navigate('Project', { item })
+								}>
 								<View style={styles.project}>
 									<Text style={styles.projectText}>
 										{item.name}

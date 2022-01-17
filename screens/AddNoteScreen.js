@@ -11,31 +11,46 @@ import {
 import Colors from '../constants/Colors';
 import { Ionicons } from 'react-native-vector-icons';
 import { useForm, Controller } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import * as globalActions from '../store/actions/index';
 
-const AddNoteScreen = ({ navigation }) => {
+const AddNoteScreen = ({ navigation, route }) => {
+	const project = route.params.project;
+
 	const {
 		control,
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
 
+	const dispatch = useDispatch();
+
+	// Fonction
+	const onSubmit = (data) => {
+		console.log(`data =>`, data);
+		const note = {
+			name: data.name,
+		};
+
+		dispatch(globalActions.addNote(note));
+		navigation.goBack();
+	};
+
 	return (
 		<View style={styles.container}>
 			<SafeAreaView style={{ flex: 1 }}>
 				<Text style={styles.title}>Ajouter une note</Text>
 				<View style={styles.inputContainer}>
-					<Text style={styles.projectName}>Projet</Text>
+					<Text style={styles.projectName}>{project.name}</Text>
 					<Controller
-						render={({
-							field: { onChange, value },
-							fieldState: { invalid, isTouched, isDirty, error },
-						}) => (
+						render={({ field: { onChange, value } }) => (
 							<TextInput
 								placeholder='Tapez quelque chose...'
 								style={styles.input}
 								value={value}
-								onChange={(value) => onChange(value)} // send value to hook form
+								onChangeText={onChange}
 								multiline
+								autoFocus
 							/>
 						)}
 						name='name'
@@ -47,7 +62,7 @@ const AddNoteScreen = ({ navigation }) => {
 				<TouchableOpacity
 					activeOpacity={0.8}
 					style={styles.submit}
-					onPress={() => navigation.goBack()}>
+					onPress={handleSubmit(onSubmit)}>
 					<Text style={styles.submitText}>Ajouter</Text>
 					<Ionicons name='arrow-forward' size={23} color='white' />
 				</TouchableOpacity>
