@@ -1,6 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import {
+	FlatList,
 	Image,
 	Platform,
 	SafeAreaView,
@@ -11,6 +12,7 @@ import {
 } from 'react-native';
 import { Ionicons } from 'react-native-vector-icons';
 import { useSelector } from 'react-redux';
+import Note from '../components/Note/Note';
 import Colors from '../constants/Colors';
 
 const ProjectScreen = ({ route, navigation }) => {
@@ -29,7 +31,26 @@ const ProjectScreen = ({ route, navigation }) => {
 					<Ionicons name='arrow-back' size={23} color='white' />
 				</TouchableOpacity>
 				<Text style={styles.title}>{project.name}</Text>
-				{notes[0] ? null : (
+				{notes[0] ? (
+					<>
+						<TouchableOpacity
+							activeOpacity={0.8}
+							style={{ marginBottom: 30 }}
+							onPress={() =>
+								navigation.navigate('addNote', { project })
+							}>
+							<View style={styles.smallAddButton}>
+								<Text style={styles.smallAddButtonText}>
+									Ajouter
+								</Text>
+							</View>
+						</TouchableOpacity>
+						<FlatList
+							data={notes}
+							renderItem={({ item }) => <Note item={item} />}
+						/>
+					</>
+				) : (
 					<>
 						<Image
 							source={require('../assets/empty.png')}
@@ -91,5 +112,17 @@ const styles = StyleSheet.create({
 	addButtonText: {
 		color: 'white',
 		fontSize: 18,
+	},
+	smallAddButton: {
+		alignItems: 'center',
+		justifyContent: 'center',
+		height: 30,
+		width: 140,
+		borderRadius: 15,
+		backgroundColor: Colors.primary,
+		alignSelf: 'flex-end',
+	},
+	smallAddButtonText: {
+		color: 'white',
 	},
 });

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import {
+	FlatList,
 	Image,
 	Platform,
 	SafeAreaView,
@@ -17,6 +18,7 @@ import Colors from '../constants/Colors';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import * as globalActions from '../store/actions/index';
+import Note from '../components/Note/Note';
 
 const HomeScreen = ({ navigation }) => {
 	const state = useSelector((state) => state);
@@ -54,26 +56,36 @@ const HomeScreen = ({ navigation }) => {
 						</LinearGradient>
 					</View>
 					<Text style={styles.title}>Notes ({notes.length})</Text>
-
-					<Image
-						source={require('../assets/empty.png')}
-						style={styles.image}
-					/>
-					<Text>
-						Commencez par créer votre premier projet pour ajouter
-						votre première note par la suite.
-					</Text>
-					<TouchableOpacity
-						activeOpacity={0.8}
-						onPress={() => navigation.navigate('TabProjects')}>
-						<LinearGradient
-							colors={['#A996F2', '#8F79FC']}
-							style={styles.addButton}>
-							<Text style={styles.addButtonText}>
-								Voir mes projets
+					{!notes[0] ? (
+						<>
+							<Image
+								source={require('../assets/empty.png')}
+								style={styles.image}
+							/>
+							<Text>
+								Commencez par créer votre premier projet pour
+								ajouter votre première note par la suite.
 							</Text>
-						</LinearGradient>
-					</TouchableOpacity>
+							<TouchableOpacity
+								activeOpacity={0.8}
+								onPress={() =>
+									navigation.navigate('TabProjects')
+								}>
+								<LinearGradient
+									colors={['#A996F2', '#8F79FC']}
+									style={styles.addButton}>
+									<Text style={styles.addButtonText}>
+										Voir mes projets
+									</Text>
+								</LinearGradient>
+							</TouchableOpacity>
+						</>
+					) : (
+						<FlatList
+							data={notes}
+							renderItem={({ item }) => <Note item={item} />}
+						/>
+					)}
 				</SafeAreaView>
 			</View>
 		</ScrollView>
