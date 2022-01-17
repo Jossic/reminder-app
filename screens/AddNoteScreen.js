@@ -29,7 +29,9 @@ const AddNoteScreen = ({ navigation, route }) => {
 	const onSubmit = (data) => {
 		console.log(`data =>`, data);
 		const note = {
-			name: data.name,
+			content: data.name,
+			createdAt: new Date(),
+			projectId: project.id,
 		};
 
 		dispatch(globalActions.addNote(note));

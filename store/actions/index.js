@@ -33,7 +33,9 @@ export const addNote = (note) => {
 			.then((response) => {
 				const newNote = {
 					id: response.data.name,
-					name: note.name,
+					content: note.content,
+					createdAt: note.createdAt,
+					projectId: note.projectId,
 				};
 				dispatch({ type: ADD_NOTE, note: newNote });
 			})
