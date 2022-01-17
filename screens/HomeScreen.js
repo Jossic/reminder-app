@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
 	Image,
 	Platform,
@@ -15,11 +15,18 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '../constants/Colors';
 
 // Redux
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import * as globalActions from '../store/actions/index';
 
 const HomeScreen = ({ navigation }) => {
 	const state = useSelector((state) => state);
 	const { notes, projects } = state;
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(globalActions.getNotes());
+		dispatch(globalActions.getProjects());
+	}, []);
 
 	// Variables
 	const date = moment().format('LL');

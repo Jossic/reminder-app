@@ -1,4 +1,5 @@
-import { ADD_NOTE, ADD_PROJECT } from '../actions';
+import { ADD_NOTE, ADD_PROJECT, GET_NOTES, GET_PROJECTS } from '../actions';
+import moment from 'moment';
 
 const initialState = {
 	notes: [],
@@ -16,6 +17,30 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				notes: [action.note, ...state.notes],
+			};
+		case GET_PROJECTS:
+			const projects = [...action.projects];
+
+			projects.sort((a, b) => {
+				let dateA = moment(a.createdAd),
+					dateB = moment(b.createdAd);
+				return dateB - dateA;
+			});
+			return {
+				...state,
+				projects,
+			};
+		case GET_NOTES:
+			const notes = [...action.notes];
+
+			notes.sort((a, b) => {
+				let dateA = moment(a.createdAd),
+					dateB = moment(b.createdAd);
+				return dateB - dateA;
+			});
+			return {
+				...state,
+				notes,
 			};
 		default:
 			return state;
