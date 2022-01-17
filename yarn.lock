@@ -2545,6 +2545,11 @@ expo-keep-awake@~10.0.1:
   resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-10.0.1.tgz#9f1176216c41eee20843c8232acfdca2bc32d334"
   integrity sha512-kcBtoDGkm3RRe6BpKDvR7gof/ErajEia38u92pRvNRctdh+p8AFO7GQuiipyg3iMfhcCFVTCIV7h3tuA0g/yDw==
 
+expo-linear-gradient@~11.0.0:
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/expo-linear-gradient/-/expo-linear-gradient-11.0.0.tgz#88605aad93ee73c32110e83e89ef17bb13c330b5"
+  integrity sha512-OVzmsz5y+NxX4XvtQhKAQCdakVaAwFB0ajYlcT50zl1MKU33LrBa8hxSe3qo8CCGSZSfjdfzGvyZ1cf12BXI9Q==
+
 expo-modules-autolinking@0.5.5:
   version "0.5.5"
   resolved "https://registry.yarnpkg.com/expo-modules-autolinking/-/expo-modules-autolinking-0.5.5.tgz#6bcc42072dcbdfca79d207b7f549f1fdb54a2b74"
@@ -3994,6 +3999,11 @@ mockdate@^3.0.2:
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/mockdate/-/mockdate-3.0.5.tgz#789be686deb3149e7df2b663d2bc4392bc3284fb"
   integrity sha512-iniQP4rj1FhBdBYS/+eQv7j1tadJ9lJtdzgOpvsOHng/GbcDh2Fhdeq+ZRldrPYdXvCyfFUmFeEwEGXZB5I/AQ==
+
+moment@^2.29.1:
+  version "2.29.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
+  integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
 
 ms@2.0.0:
   version "2.0.0"
