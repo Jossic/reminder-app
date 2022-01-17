@@ -11,6 +11,8 @@ import {
 import Colors from '../constants/Colors';
 import { Ionicons } from 'react-native-vector-icons';
 import { useForm, Controller } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import * as globalActions from '../store/actions/index';
 
 const AddProjectScreen = ({ navigation }) => {
 	const {
@@ -19,34 +21,48 @@ const AddProjectScreen = ({ navigation }) => {
 		formState: { errors },
 	} = useForm();
 
+	const dispatch = useDispatch();
+
+	// Fonction
+	const onSubmit = (data) => {
+		console.log(`data =>`, data);
+		const project = {
+			name: data.name,
+		};
+
+		dispatch(globalActions.addProject(project));
+		navigation.goBack();
+	};
+
 	return (
 		<View style={styles.container}>
 			<SafeAreaView style={{ flex: 1 }}>
 				<Text style={styles.title}>Ajouter un projet</Text>
+
 				<View style={styles.inputContainer}>
 					<Controller
-						render={({
-							field: { onChange, value },
-							fieldState: { invalid, isTouched, isDirty, error },
-						}) => (
+						control={control}
+						render={({ field: { value, onChange } }) => (
 							<TextInput
 								placeholder='Tapez quelque chose...'
-								style={styles.input}
 								value={value}
-								onChange={(value) => onChange(value)} // send value to hook form
-								multiline
+								onChangeText={onChange}
+								multiline={true}
+								style={styles.input}
+								autoFocus
 							/>
 						)}
 						name='name'
-						control={control}
-						rules={{ required: true }}
+						rules={{
+							required: true,
+						}}
 					/>
 				</View>
 
 				<TouchableOpacity
 					activeOpacity={0.8}
 					style={styles.submit}
-					onPress={() => navigation.goBack()}>
+					onPress={handleSubmit(onSubmit)}>
 					<Text style={styles.submitText}>Créer</Text>
 					<Ionicons name='arrow-forward' size={23} color='white' />
 				</TouchableOpacity>
