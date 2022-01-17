@@ -3,6 +3,7 @@ import {
 	Image,
 	Platform,
 	SafeAreaView,
+	ScrollView,
 	StyleSheet,
 	Text,
 	TouchableOpacity,
@@ -13,48 +14,52 @@ import 'moment/locale/fr';
 import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '../constants/Colors';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
 	// Variables
 	const date = moment().format('LL');
 	return (
-		<View style={styles.container}>
-			<SafeAreaView style={{ flex: 1 }}>
-				<Text style={styles.date}>{date}</Text>
-				<View style={styles.cards}>
-					<LinearGradient
-						colors={['#ED89AF', '#F45384']}
-						style={styles.card}>
-						<Text style={styles.cardNumber}>0</Text>
-						<Text style={styles.cardText}>Notes</Text>
-					</LinearGradient>
-					<LinearGradient
-						colors={['#FED3A0', '#FFA63E']}
-						style={styles.card}>
-						<Text style={styles.cardNumber}>0</Text>
-						<Text style={styles.cardText}>Projets</Text>
-					</LinearGradient>
-				</View>
-				<Text style={styles.title}>Notes (0)</Text>
+		<ScrollView>
+			<View style={styles.container}>
+				<SafeAreaView style={{ flex: 1 }}>
+					<Text style={styles.date}>{date}</Text>
+					<View style={styles.cards}>
+						<LinearGradient
+							colors={['#ED89AF', '#F45384']}
+							style={styles.card}>
+							<Text style={styles.cardNumber}>0</Text>
+							<Text style={styles.cardText}>Notes</Text>
+						</LinearGradient>
+						<LinearGradient
+							colors={['#FED3A0', '#FFA63E']}
+							style={styles.card}>
+							<Text style={styles.cardNumber}>0</Text>
+							<Text style={styles.cardText}>Projets</Text>
+						</LinearGradient>
+					</View>
+					<Text style={styles.title}>Notes (0)</Text>
 
-				<Image
-					source={require('../assets/empty.png')}
-					style={styles.image}
-				/>
-				<Text>
-					Commencez par créer votre premier projet pour ajouter votre
-					première note par la suite.
-				</Text>
-				<TouchableOpacity activeOpacity={0.8}>
-					<LinearGradient
-						colors={['#A996F2', '#8F79FC']}
-						style={styles.addButton}>
-						<Text style={styles.addButtonText}>
-							Voir mes projets
-						</Text>
-					</LinearGradient>
-				</TouchableOpacity>
-			</SafeAreaView>
-		</View>
+					<Image
+						source={require('../assets/empty.png')}
+						style={styles.image}
+					/>
+					<Text>
+						Commencez par créer votre premier projet pour ajouter
+						votre première note par la suite.
+					</Text>
+					<TouchableOpacity
+						activeOpacity={0.8}
+						onPress={() => navigation.navigate('TabProjects')}>
+						<LinearGradient
+							colors={['#A996F2', '#8F79FC']}
+							style={styles.addButton}>
+							<Text style={styles.addButtonText}>
+								Voir mes projets
+							</Text>
+						</LinearGradient>
+					</TouchableOpacity>
+				</SafeAreaView>
+			</View>
+		</ScrollView>
 	);
 };
 

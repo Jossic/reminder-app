@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import Colors from '../constants/Colors';
 
-const ProjectsScreen = () => {
+const ProjectsScreen = ({ navigation }) => {
 	return (
 		<View style={styles.container}>
 			<SafeAreaView style={{ flex: 1 }}>
@@ -22,7 +22,9 @@ const ProjectsScreen = () => {
 						style={styles.image}
 					/>
 					<Text>Commencez par créer votre premier projet.</Text>
-					<TouchableOpacity activeOpacity={0.8}>
+					<TouchableOpacity
+						activeOpacity={0.8}
+						onPress={() => navigation.navigate('addProject')}>
 						<LinearGradient
 							colors={['#A996F2', '#8F79FC']}
 							style={styles.addButton}>
