@@ -14,7 +14,13 @@ import 'moment/locale/fr';
 import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '../constants/Colors';
 
+// Redux
+import { useSelector } from 'react-redux';
+
 const HomeScreen = ({ navigation }) => {
+	const state = useSelector((state) => state);
+	const { notes, projects } = state;
+
 	// Variables
 	const date = moment().format('LL');
 	return (
@@ -26,17 +32,21 @@ const HomeScreen = ({ navigation }) => {
 						<LinearGradient
 							colors={['#ED89AF', '#F45384']}
 							style={styles.card}>
-							<Text style={styles.cardNumber}>0</Text>
+							<Text style={styles.cardNumber}>
+								{notes.length}
+							</Text>
 							<Text style={styles.cardText}>Notes</Text>
 						</LinearGradient>
 						<LinearGradient
 							colors={['#FED3A0', '#FFA63E']}
 							style={styles.card}>
-							<Text style={styles.cardNumber}>0</Text>
+							<Text style={styles.cardNumber}>
+								{projects.length}
+							</Text>
 							<Text style={styles.cardText}>Projets</Text>
 						</LinearGradient>
 					</View>
-					<Text style={styles.title}>Notes (0)</Text>
+					<Text style={styles.title}>Notes ({notes.length})</Text>
 
 					<Image
 						source={require('../assets/empty.png')}
