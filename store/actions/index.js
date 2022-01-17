@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../axios-instance';
 
 export const ADD_PROJECT = 'ADD_PROJECT';
 export const ADD_NOTE = 'ADD_NOTE';
@@ -6,10 +6,7 @@ export const ADD_NOTE = 'ADD_NOTE';
 export const addProject = (project) => {
 	return (dispatch) => {
 		axios
-			.post(
-				'https://reminder-app-56dcc-default-rtdb.europe-west1.firebasedatabase.app/projects.json',
-				project
-			)
+			.post('/projects.json', project)
 			.then((response) => {
 				console.log(`response =>`, response);
 				const newProject = {
@@ -26,10 +23,7 @@ export const addProject = (project) => {
 export const addNote = (note) => {
 	return (dispatch) => {
 		axios
-			.post(
-				'https://reminder-app-56dcc-default-rtdb.europe-west1.firebasedatabase.app/notes.json',
-				note
-			)
+			.post('/notes.json', note)
 			.then((response) => {
 				const newNote = {
 					id: response.data.name,
