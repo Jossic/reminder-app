@@ -43,15 +43,28 @@ const AuthenticationScreen = ({ navigation }) => {
 										style={styles.input}
 										autoFocus
 										autoCorrect={false}
-										autoCapitalize={false}
 									/>
 								)}
 								name='email'
 								rules={{
-									required: true,
+									required: {
+										value: true,
+										message:
+											'Merci de renseigner votre mail',
+									},
+									pattern: {
+										value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+										message:
+											'Merci de renseigner un mail valide',
+									},
 								}}
 							/>
 						</View>
+						{errors.email && (
+							<Text style={styles.error}>
+								{errors.email.message}
+							</Text>
+						)}
 						<Text style={{ ...styles.label, marginTop: 15 }}>
 							Password
 						</Text>
@@ -69,10 +82,24 @@ const AuthenticationScreen = ({ navigation }) => {
 								)}
 								name='password'
 								rules={{
-									required: true,
+									required: {
+										value: true,
+										message:
+											'Merci de renseigner votre password',
+									},
+									minLength: {
+										value: 4,
+										message:
+											'Le password doit comporter mini 4 caractères',
+									},
 								}}
 							/>
 						</View>
+						{errors.password && (
+							<Text style={styles.error}>
+								{errors.password.message}
+							</Text>
+						)}
 					</View>
 					<TouchableOpacity
 						activeOpacity={0.8}
@@ -123,7 +150,7 @@ const styles = StyleSheet.create({
 		shadowOpacity: 0.2,
 		shadowRadius: 1.41,
 		elevation: 2,
-		width: Dimensions.get('window').width * 0.7,
+		width: '100%',
 	},
 	input: {
 		maxHeight: 150,
@@ -141,7 +168,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 		alignSelf: 'center',
-		marginTop: 30,
+		marginTop: 40,
 		borderRadius: 10,
 	},
 	form: {
@@ -149,9 +176,15 @@ const styles = StyleSheet.create({
 		padding: 30,
 		backgroundColor: '#95a5a6',
 		borderRadius: 5,
+		width: Dimensions.get('window').width * 0.85,
 	},
 	label: {
 		marginBottom: 5,
 		color: Colors.primary,
+		fontWeight: 'bold',
+	},
+	error: {
+		color: 'red',
+		marginTop: 5,
 	},
 });
