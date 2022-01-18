@@ -9,12 +9,13 @@ import {
 	Dimensions,
 	KeyboardAvoidingView,
 	Platform,
+	Alert,
 } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import Colors from '../constants/Colors';
 
 // Redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as globalActions from '../store/actions/index';
 
 const AuthenticationScreen = ({ navigation }) => {
@@ -25,16 +26,37 @@ const AuthenticationScreen = ({ navigation }) => {
 		formState: { errors },
 	} = useForm();
 
+	const userId = useSelector((state) => state.userId);
+
 	const dispatch = useDispatch();
 
-	const onSubmit = (data) => {
+	const onSubmit = async (data) => {
 		console.log(`data =>`, data);
 		const { email, password } = data;
 		if (loginMode) {
 			// Connexion
 		} else {
 			// Inscription
-			dispatch(globalActions.signup(email, password));
+			try {
+				await dispatch(globalActions.signup(email, password));
+				navigation.navigate('Home');
+			} catch (error) {
+				switch (error.message) {
+					case 'EMAIL_EXISTS':
+						Alert.alert(
+							'Action impossible',
+							'Cet email est déja utilisé.'
+						);
+						break;
+
+					default:
+						Alert.alert(
+							'Action impossible',
+							'Une erreur est survenue.'
+						);
+						break;
+				}
+			}
 		}
 
 		// userId

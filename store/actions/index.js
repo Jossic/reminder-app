@@ -109,8 +109,8 @@ export const deleteProject = (projectId) => {
 };
 
 export const signup = (email, password) => {
-	return (dispatch) => {
-		axios
+	return async (dispatch) => {
+		await axios
 			.post(
 				`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${Keys.firebase}`,
 				{
@@ -129,6 +129,7 @@ export const signup = (email, password) => {
 			})
 			.catch((error) => {
 				console.log(`catch signup error =>`, error.response.data.error);
+				throw new Error(error.response.data.error.message);
 			});
 	};
 };
