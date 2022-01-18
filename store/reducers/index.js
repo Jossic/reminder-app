@@ -3,14 +3,17 @@ import {
 	ADD_PROJECT,
 	DELETE_NOTE,
 	DELETE_PROJECT,
+	END_LOADING,
 	GET_NOTES,
 	GET_PROJECTS,
+	START_LOADING,
 } from '../actions';
 import moment from 'moment';
 
 const initialState = {
 	notes: [],
 	projects: [],
+	loadingNotes: false,
 };
 
 export default (state = initialState, action) => {
@@ -66,6 +69,16 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				notes: [...currentNotes],
+			};
+		case START_LOADING:
+			return {
+				...state,
+				loadingNotes: true,
+			};
+		case END_LOADING:
+			return {
+				...state,
+				loadingNotes: false,
 			};
 		default:
 			return state;

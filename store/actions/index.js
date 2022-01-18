@@ -6,6 +6,8 @@ export const GET_NOTES = 'GET_NOTES';
 export const GET_PROJECTS = 'GET_PROJECTS';
 export const DELETE_NOTE = 'DELETE_NOTE';
 export const DELETE_PROJECT = 'DELETE_PROJECT';
+export const START_LOADING = 'START_LOADING';
+export const END_LOADING = 'END_LOADING';
 
 export const addProject = (project) => {
 	return (dispatch) => {
@@ -45,6 +47,7 @@ export const addNote = (note) => {
 
 export const getNotes = () => {
 	return (dispatch) => {
+		dispatch({ type: START_LOADING });
 		axios
 			.get('/notes.json')
 			.then((response) => {
@@ -58,9 +61,11 @@ export const getNotes = () => {
 					});
 				}
 				dispatch({ type: GET_NOTES, notes });
+				dispatch({ type: END_LOADING });
 			})
 			.catch((error) => {
 				console.log(`catch error =>`, error);
+				dispatch({ type: END_LOADING });
 			});
 	};
 };

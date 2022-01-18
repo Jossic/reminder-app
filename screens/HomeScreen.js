@@ -9,6 +9,7 @@ import {
 	Text,
 	TouchableOpacity,
 	View,
+	ActivityIndicator,
 } from 'react-native';
 import moment from 'moment';
 import 'moment/locale/fr';
@@ -23,6 +24,7 @@ import Note from '../components/Note/Note';
 const HomeScreen = ({ navigation }) => {
 	const state = useSelector((state) => state);
 	const { notes, projects } = state;
+	const loadingNotes = useSelector((state) => state.loadingNotes);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -30,12 +32,25 @@ const HomeScreen = ({ navigation }) => {
 		dispatch(globalActions.getProjects());
 	}, []);
 
+	if (loadingNotes) {
+		return (
+			<View
+				style={{
+					flex: 1,
+					alignItems: 'center',
+					justifyContent: 'center',
+				}}>
+				<ActivityIndicator size='large' color={Colors.primary} />
+			</View>
+		);
+	}
+
 	// Variables
 	const date = moment().format('LL');
 	return (
-		<ScrollView>
-			<View style={styles.container}>
-				<SafeAreaView style={{ flex: 1 }}>
+		<View style={styles.container}>
+			<SafeAreaView style={{ flex: 1 }}>
+				<ScrollView>
 					<Text style={styles.date}>{date}</Text>
 					<View style={styles.cards}>
 						<LinearGradient
@@ -86,9 +101,9 @@ const HomeScreen = ({ navigation }) => {
 							renderItem={({ item }) => <Note item={item} />}
 						/>
 					)}
-				</SafeAreaView>
-			</View>
-		</ScrollView>
+				</ScrollView>
+			</SafeAreaView>
+		</View>
 	);
 };
 
