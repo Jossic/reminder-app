@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from '../../axios-instance';
 import Keys from '../../constants/Keys';
 
@@ -120,7 +121,11 @@ export const signup = (email, password) => {
 				}
 			)
 			.then((response) => {
-				// console.log(`response =>`, response);
+				saveDateToStorage(
+					response.data.idToken,
+					response.data.refreshToken
+				);
+
 				dispatch({
 					type: SIGNUP,
 					userId: response.data.localId,
@@ -132,4 +137,14 @@ export const signup = (email, password) => {
 				throw new Error(error.response.data.error.message);
 			});
 	};
+};
+
+const saveDateToStorage = (token, refreshToken) => {
+	AsyncStorage.setItem(
+		'userData',
+		JSON.stringify({
+			token,
+			refreshToken,
+		})
+	);
 };
