@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	StyleSheet,
 	Text,
@@ -7,11 +7,14 @@ import {
 	SafeAreaView,
 	TouchableOpacity,
 	Dimensions,
+	KeyboardAvoidingView,
+	Platform,
 } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import Colors from '../constants/Colors';
 
 const AuthenticationScreen = ({ navigation }) => {
+	const [loginMode, setLoginMode] = useState(false);
 	const {
 		control,
 		handleSubmit,
@@ -23,93 +26,116 @@ const AuthenticationScreen = ({ navigation }) => {
 	};
 
 	return (
-		<View style={styles.container}>
-			<SafeAreaView style={{ flex: 1 }}>
-				<View style={styles.container2}>
-					<Text style={styles.title}>Reminder</Text>
-					<Text style={styles.slogan}>Stockez toutes vos idées</Text>
-
-					<View style={[styles.form, { marginTop: 50 }]}>
-						<Text style={styles.label}>Mail</Text>
-						<View style={[styles.inputContainer]}>
-							<Controller
-								control={control}
-								render={({ field: { value, onChange } }) => (
-									<TextInput
-										placeholder='Email...'
-										keyboardType='email-address'
-										value={value}
-										onChangeText={onChange}
-										style={styles.input}
-										autoFocus
-										autoCorrect={false}
-									/>
-								)}
-								name='email'
-								rules={{
-									required: {
-										value: true,
-										message:
-											'Merci de renseigner votre mail',
-									},
-									pattern: {
-										value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-										message:
-											'Merci de renseigner un mail valide',
-									},
-								}}
-							/>
-						</View>
-						{errors.email && (
-							<Text style={styles.error}>
-								{errors.email.message}
-							</Text>
-						)}
-						<Text style={{ ...styles.label, marginTop: 15 }}>
-							Password
+		<KeyboardAvoidingView
+			style={{ flex: 1 }}
+			behavior={Platform.OS === 'android' ? 'height' : 'padding'}>
+			<View style={styles.container}>
+				<SafeAreaView style={{ flex: 1 }}>
+					<View style={styles.container2}>
+						<Text style={styles.title}>Reminder</Text>
+						<Text style={styles.slogan}>
+							Stockez toutes vos idées
 						</Text>
-						<View style={styles.inputContainer}>
-							<Controller
-								control={control}
-								render={({ field: { value, onChange } }) => (
-									<TextInput
-										placeholder='Password...'
-										value={value}
-										onChangeText={onChange}
-										style={styles.input}
-										secureTextEntry={true}
-									/>
-								)}
-								name='password'
-								rules={{
-									required: {
-										value: true,
-										message:
-											'Merci de renseigner votre password',
-									},
-									minLength: {
-										value: 4,
-										message:
-											'Le password doit comporter mini 4 caractères',
-									},
-								}}
-							/>
-						</View>
-						{errors.password && (
-							<Text style={styles.error}>
-								{errors.password.message}
+
+						<View style={[styles.form, { marginTop: 50 }]}>
+							<Text style={styles.label}>Mail</Text>
+							<View style={[styles.inputContainer]}>
+								<Controller
+									control={control}
+									render={({
+										field: { value, onChange },
+									}) => (
+										<TextInput
+											placeholder='Email...'
+											keyboardType='email-address'
+											value={value}
+											onChangeText={onChange}
+											style={styles.input}
+											autoFocus
+											autoCorrect={false}
+										/>
+									)}
+									name='email'
+									rules={{
+										required: {
+											value: true,
+											message:
+												'Merci de renseigner votre mail',
+										},
+										pattern: {
+											value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+											message:
+												'Merci de renseigner un mail valide',
+										},
+									}}
+								/>
+							</View>
+							{errors.email && (
+								<Text style={styles.error}>
+									{errors.email.message}
+								</Text>
+							)}
+							<Text style={{ ...styles.label, marginTop: 15 }}>
+								Password
 							</Text>
-						)}
+							<View style={styles.inputContainer}>
+								<Controller
+									control={control}
+									render={({
+										field: { value, onChange },
+									}) => (
+										<TextInput
+											placeholder='Password...'
+											value={value}
+											onChangeText={onChange}
+											style={styles.input}
+											secureTextEntry={true}
+										/>
+									)}
+									name='password'
+									rules={{
+										required: {
+											value: true,
+											message:
+												'Merci de renseigner votre password',
+										},
+										minLength: {
+											value: 4,
+											message:
+												'Le password doit comporter mini 4 caractères',
+										},
+									}}
+								/>
+							</View>
+							{errors.password && (
+								<Text style={styles.error}>
+									{errors.password.message}
+								</Text>
+							)}
+						</View>
+						<TouchableOpacity
+							activeOpacity={0.8}
+							style={styles.submit}
+							onPress={handleSubmit(onSubmit)}>
+							<Text style={styles.submitText}>
+								{loginMode ? 'Se connecter' : 'Créer un compte'}
+							</Text>
+						</TouchableOpacity>
+
+						<TouchableOpacity
+							activeOpacity={0.8}
+							// style={styles.submit}
+							onPress={() => setLoginMode(!loginMode)}>
+							<Text style={styles.switchButton}>
+								{!loginMode
+									? 'Déja un compte ? Se connecter'
+									: 'Pas de compte ? Créer un compte'}
+							</Text>
+						</TouchableOpacity>
 					</View>
-					<TouchableOpacity
-						activeOpacity={0.8}
-						style={styles.submit}
-						onPress={handleSubmit(onSubmit)}>
-						<Text style={styles.submitText}>Créer un compte</Text>
-					</TouchableOpacity>
-				</View>
-			</SafeAreaView>
-		</View>
+				</SafeAreaView>
+			</View>
+		</KeyboardAvoidingView>
 	);
 };
 
@@ -186,5 +212,9 @@ const styles = StyleSheet.create({
 	error: {
 		color: 'red',
 		marginTop: 5,
+	},
+	switchButton: {
+		color: 'white',
+		marginTop: 30,
 	},
 });
