@@ -1,6 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import {
+	Alert,
 	FlatList,
 	Image,
 	Platform,
@@ -10,12 +11,34 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Colors from '../constants/Colors';
+import * as globalActions from '../store/actions/index';
 
 const ProjectsScreen = ({ navigation }) => {
 	// Variables
 	const projects = useSelector((state) => state.projects);
+	const notes = useSelector((state) => state.notes);
+	const dispatch = useDispatch();
+
+	const onPressHandler = (projectId) => {
+		Alert.alert('Que souhaitez-vous faire ?', undefined, [
+			{ text: 'Annuler', style: 'cancel' },
+			{
+				text: 'Supprimer',
+				style: 'destructive',
+				onPress: () => {
+					const projectsNotes = notes.filter(
+						(note) => note.projectId === projectId
+					);
+					projectsNotes.forEach((note) => {
+						dispatch(globalActions.deleteNote(note.id));
+					});
+					dispatch(globalActions.deleteProject(projectId));
+				},
+			},
+		]);
+	};
 	return (
 		<View style={styles.container}>
 			<SafeAreaView style={{ flex: 1 }}>
@@ -58,6 +81,7 @@ const ProjectsScreen = ({ navigation }) => {
 						renderItem={({ item }) => (
 							<TouchableOpacity
 								activeOpacity={0.8}
+								onLongPress={() => onPressHandler(item.id)}
 								onPress={() =>
 									navigation.navigate('Project', { item })
 								}>

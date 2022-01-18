@@ -1,4 +1,11 @@
-import { ADD_NOTE, ADD_PROJECT, GET_NOTES, GET_PROJECTS } from '../actions';
+import {
+	ADD_NOTE,
+	ADD_PROJECT,
+	DELETE_NOTE,
+	DELETE_PROJECT,
+	GET_NOTES,
+	GET_PROJECTS,
+} from '../actions';
 import moment from 'moment';
 
 const initialState = {
@@ -41,6 +48,24 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				notes,
+			};
+		case DELETE_PROJECT:
+			let currentProject = [...state.projects];
+			currentProject = currentProject.filter(
+				(project) => project.id !== action.projectId
+			);
+			return {
+				...state,
+				projects: [...currentProject],
+			};
+		case DELETE_NOTE:
+			let currentNotes = [...state.notes];
+			currentNotes = currentNotes.filter(
+				(note) => note.id !== action.noteId
+			);
+			return {
+				...state,
+				notes: [...currentNotes],
 			};
 		default:
 			return state;
