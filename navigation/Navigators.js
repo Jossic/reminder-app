@@ -11,6 +11,7 @@ import AddNoteScreen from '../screens/AddNoteScreen';
 import AddProjectScreen from '../screens/AddProjectScreen';
 import ProjectScreen from '../screens/ProjectScreen';
 import ProjectsScreen from '../screens/ProjectsScreen';
+import AuthenticationScreen from '../screens/AuthenticationScreen';
 
 // Modal navigator
 const ModalStack = createStackNavigator();
@@ -18,6 +19,11 @@ const ModalStack = createStackNavigator();
 export const AppModalStack = () => {
 	return (
 		<ModalStack.Navigator mode='modal'>
+			<ModalStack.Screen
+				name='Authentication'
+				component={AuthenticationScreen}
+				options={{ headerShown: false }}
+			/>
 			<ModalStack.Screen
 				name='Home'
 				component={AppTab}
