@@ -7,6 +7,7 @@ import {
 	GET_NOTES,
 	GET_PROJECTS,
 	START_LOADING,
+	SIGNUP,
 } from '../actions';
 import moment from 'moment';
 
@@ -14,6 +15,8 @@ const initialState = {
 	notes: [],
 	projects: [],
 	loadingNotes: false,
+	userId: null,
+	token: null,
 };
 
 export default (state = initialState, action) => {
@@ -79,6 +82,12 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				loadingNotes: false,
+			};
+		case SIGNUP:
+			return {
+				...state,
+				userId: action.userId,
+				token: action.token,
 			};
 		default:
 			return state;

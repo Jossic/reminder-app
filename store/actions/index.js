@@ -1,4 +1,5 @@
 import axios from '../../axios-instance';
+import Keys from '../../constants/Keys';
 
 export const ADD_PROJECT = 'ADD_PROJECT';
 export const ADD_NOTE = 'ADD_NOTE';
@@ -8,6 +9,7 @@ export const DELETE_NOTE = 'DELETE_NOTE';
 export const DELETE_PROJECT = 'DELETE_PROJECT';
 export const START_LOADING = 'START_LOADING';
 export const END_LOADING = 'END_LOADING';
+export const SIGNUP = 'SIGNUP';
 
 export const addProject = (project) => {
 	return (dispatch) => {
@@ -103,5 +105,30 @@ export const deleteProject = (projectId) => {
 		axios.delete(`/projects/${projectId}.json`).then((response) => {
 			dispatch({ type: DELETE_PROJECT, projectId });
 		});
+	};
+};
+
+export const signup = (email, password) => {
+	return (dispatch) => {
+		axios
+			.post(
+				`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${Keys.firebase}`,
+				{
+					email,
+					password,
+					returnSecureToken: true,
+				}
+			)
+			.then((response) => {
+				// console.log(`response =>`, response);
+				dispatch({
+					type: SIGNUP,
+					userId: response.data.localId,
+					token: response.data.idToken,
+				});
+			})
+			.catch((error) => {
+				console.log(`catch signup error =>`, error.response.data.error);
+			});
 	};
 };

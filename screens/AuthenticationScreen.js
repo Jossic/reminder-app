@@ -13,6 +13,10 @@ import {
 import { useForm, Controller } from 'react-hook-form';
 import Colors from '../constants/Colors';
 
+// Redux
+import { useDispatch } from 'react-redux';
+import * as globalActions from '../store/actions/index';
+
 const AuthenticationScreen = ({ navigation }) => {
 	const [loginMode, setLoginMode] = useState(false);
 	const {
@@ -21,8 +25,20 @@ const AuthenticationScreen = ({ navigation }) => {
 		formState: { errors },
 	} = useForm();
 
+	const dispatch = useDispatch();
+
 	const onSubmit = (data) => {
 		console.log(`data =>`, data);
+		const { email, password } = data;
+		if (loginMode) {
+			// Connexion
+		} else {
+			// Inscription
+			dispatch(globalActions.signup(email, password));
+		}
+
+		// userId
+		// token
 	};
 
 	return (
@@ -100,9 +116,9 @@ const AuthenticationScreen = ({ navigation }) => {
 												'Merci de renseigner votre password',
 										},
 										minLength: {
-											value: 4,
+											value: 6,
 											message:
-												'Le password doit comporter mini 4 caractères',
+												'Le password doit comporter mini 6 caractères',
 										},
 									}}
 								/>
