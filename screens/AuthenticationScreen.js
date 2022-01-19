@@ -36,6 +36,35 @@ const AuthenticationScreen = ({ navigation }) => {
 		const { email, password } = data;
 		if (loginMode) {
 			// Connexion
+			try {
+				await dispatch(globalActions.signin(email, password));
+				navigation.navigate('Home');
+			} catch (error) {
+				switch (error.message) {
+					case 'EMAIL_NOT_FOUND':
+						Alert.alert(
+							'Identifiants et/ou mot de passe invalide',
+							undefined
+						);
+						break;
+					case 'INVALID_PASSWORD':
+						Alert.alert(
+							'Identifiants et/ou mot de passe invalide',
+							undefined
+						);
+						break;
+					case 'USER_DISABLED':
+						Alert.alert('Votre compte a été bloqué', undefined);
+						break;
+
+					default:
+						Alert.alert(
+							'Action impossible',
+							'Une erreur est survenue.'
+						);
+						break;
+				}
+			}
 		} else {
 			// Inscription
 			try {

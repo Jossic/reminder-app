@@ -7,7 +7,7 @@ import {
 	GET_NOTES,
 	GET_PROJECTS,
 	START_LOADING,
-	SIGNUP,
+	AUTHENTICATE,
 	SET_TRY_LOGIN,
 	FETCH_REFRESH_TOKEN,
 	LOGOUT,
@@ -87,7 +87,7 @@ export default (state = initialState, action) => {
 				...state,
 				loadingNotes: false,
 			};
-		case SIGNUP:
+		case AUTHENTICATE:
 			return {
 				...state,
 				userId: action.userId,

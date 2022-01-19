@@ -10,7 +10,7 @@ export const DELETE_NOTE = 'DELETE_NOTE';
 export const DELETE_PROJECT = 'DELETE_PROJECT';
 export const START_LOADING = 'START_LOADING';
 export const END_LOADING = 'END_LOADING';
-export const SIGNUP = 'SIGNUP';
+export const AUTHENTICATE = 'AUTHENTICATE';
 export const LOGOUT = 'LOGOUT';
 export const SET_TRY_LOGIN = 'SET_TRY_LOGIN';
 export const FETCH_REFRESH_TOKEN = 'FETCH_REFRESH_TOKEN';
@@ -130,13 +130,42 @@ export const signup = (email, password) => {
 				);
 
 				dispatch({
-					type: SIGNUP,
+					type: AUTHENTICATE,
 					userId: response.data.localId,
 					token: response.data.idToken,
 				});
 			})
 			.catch((error) => {
 				console.log(`catch signup error =>`, error.response.data.error);
+				throw new Error(error.response.data.error.message);
+			});
+	};
+};
+export const signin = (email, password) => {
+	return async (dispatch) => {
+		await axios
+			.post(
+				`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${Keys.firebase}`,
+				{
+					email,
+					password,
+					returnSecureToken: true,
+				}
+			)
+			.then((response) => {
+				saveDateToStorage(
+					response.data.idToken,
+					response.data.refreshToken
+				);
+
+				dispatch({
+					type: AUTHENTICATE,
+					userId: response.data.localId,
+					token: response.data.idToken,
+				});
+			})
+			.catch((error) => {
+				console.log(`catch signin error =>`, error.response.data.error);
 				throw new Error(error.response.data.error.message);
 			});
 	};
