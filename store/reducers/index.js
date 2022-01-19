@@ -10,6 +10,7 @@ import {
 	SIGNUP,
 	SET_TRY_LOGIN,
 	FETCH_REFRESH_TOKEN,
+	LOGOUT,
 } from '../actions';
 import moment from 'moment';
 
@@ -103,6 +104,12 @@ export default (state = initialState, action) => {
 				userId: action.userId,
 				token: action.token,
 				didTryAutoLogin: true,
+			};
+		case LOGOUT:
+			return {
+				...state,
+				userId: null,
+				token: null,
 			};
 		default:
 			return state;

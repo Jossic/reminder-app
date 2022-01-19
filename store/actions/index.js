@@ -11,6 +11,7 @@ export const DELETE_PROJECT = 'DELETE_PROJECT';
 export const START_LOADING = 'START_LOADING';
 export const END_LOADING = 'END_LOADING';
 export const SIGNUP = 'SIGNUP';
+export const LOGOUT = 'LOGOUT';
 export const SET_TRY_LOGIN = 'SET_TRY_LOGIN';
 export const FETCH_REFRESH_TOKEN = 'FETCH_REFRESH_TOKEN';
 
@@ -174,6 +175,13 @@ export const fetchRefreshToken = (refreshToken) => {
 				);
 				// throw new Error(error.response.data.error.message);
 			});
+	};
+};
+
+export const logout = () => {
+	AsyncStorage.removeItem('userData');
+	return {
+		type: LOGOUT,
 	};
 };
 

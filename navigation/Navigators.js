@@ -20,11 +20,6 @@ const ModalStack = createStackNavigator();
 export const AppModalStack = () => {
 	return (
 		<ModalStack.Navigator mode='modal'>
-			{/* <ModalStack.Screen
-				name='Authentication'
-				component={AuthenticationScreen}
-				options={{ headerShown: false }}
-			/> */}
 			<ModalStack.Screen
 				name='Home'
 				component={AppTab}

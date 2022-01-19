@@ -14,12 +14,17 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import Colors from '../constants/Colors';
 import * as globalActions from '../store/actions/index';
+import { Ionicons } from 'react-native-vector-icons';
 
 const ProjectsScreen = ({ navigation }) => {
 	// Variables
 	const projects = useSelector((state) => state.projects);
 	const notes = useSelector((state) => state.notes);
 	const dispatch = useDispatch();
+
+	const onLogoutPressHandler = () => {
+		dispatch(globalActions.logout());
+	};
 
 	const onPressHandler = (projectId) => {
 		Alert.alert('Que souhaitez-vous faire ?', undefined, [
@@ -94,6 +99,12 @@ const ProjectsScreen = ({ navigation }) => {
 						)}
 					/>
 				)}
+				<TouchableOpacity
+					activeOpacity={0.8}
+					style={styles.logout}
+					onPress={onLogoutPressHandler}>
+					<Ionicons name='power' color='white' size={23} />
+				</TouchableOpacity>
 			</SafeAreaView>
 		</View>
 	);
@@ -157,5 +168,16 @@ const styles = StyleSheet.create({
 	},
 	smallAddButtonText: {
 		color: 'white',
+	},
+	logout: {
+		backgroundColor: Colors.primary,
+		height: 50,
+		width: 50,
+		borderRadius: 25,
+		alignItems: 'center',
+		justifyContent: 'center',
+		alignSelf: 'center',
+		position: 'absolute',
+		bottom: 50,
 	},
 });
