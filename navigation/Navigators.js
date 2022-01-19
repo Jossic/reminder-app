@@ -12,6 +12,7 @@ import AddProjectScreen from '../screens/AddProjectScreen';
 import ProjectScreen from '../screens/ProjectScreen';
 import ProjectsScreen from '../screens/ProjectsScreen';
 import AuthenticationScreen from '../screens/AuthenticationScreen';
+import StartupScreen from '../screens/StartupScreen';
 
 // Modal navigator
 const ModalStack = createStackNavigator();
@@ -19,11 +20,11 @@ const ModalStack = createStackNavigator();
 export const AppModalStack = () => {
 	return (
 		<ModalStack.Navigator mode='modal'>
-			<ModalStack.Screen
+			{/* <ModalStack.Screen
 				name='Authentication'
 				component={AuthenticationScreen}
 				options={{ headerShown: false }}
-			/>
+			/> */}
 			<ModalStack.Screen
 				name='Home'
 				component={AppTab}
@@ -96,5 +97,33 @@ const AppProjectsStack = () => {
 				options={{ headerShown: false }}
 			/>
 		</ProjectsStack.Navigator>
+	);
+};
+// Auth stack navigator
+const AuthStack = createStackNavigator();
+
+export const AuthenticatorStackNavigator = () => {
+	return (
+		<AuthStack.Navigator>
+			<AuthStack.Screen
+				name='Authentication'
+				component={AuthenticationScreen}
+				options={{ headerShown: false }}
+			/>
+		</AuthStack.Navigator>
+	);
+};
+// Startup stack navigator
+const StartupStack = createStackNavigator();
+
+export const StartupStackNavigator = () => {
+	return (
+		<StartupStack.Navigator>
+			<StartupStack.Screen
+				name='Startup'
+				component={StartupScreen}
+				options={{ headerShown: false }}
+			/>
+		</StartupStack.Navigator>
 	);
 };
