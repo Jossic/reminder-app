@@ -11,6 +11,8 @@ export const DELETE_PROJECT = 'DELETE_PROJECT';
 export const START_LOADING = 'START_LOADING';
 export const END_LOADING = 'END_LOADING';
 export const SIGNUP = 'SIGNUP';
+export const SET_TRY_LOGIN = 'SET_TRY_LOGIN';
+export const FETCH_REFRESH_TOKEN = 'FETCH_REFRESH_TOKEN';
 
 export const addProject = (project) => {
 	return (dispatch) => {
@@ -135,6 +137,42 @@ export const signup = (email, password) => {
 			.catch((error) => {
 				console.log(`catch signup error =>`, error.response.data.error);
 				throw new Error(error.response.data.error.message);
+			});
+	};
+};
+export const setDidTry = () => {
+	return {
+		type: SET_TRY_LOGIN,
+	};
+};
+export const fetchRefreshToken = (refreshToken) => {
+	return async (dispatch) => {
+		await axios
+			.post(
+				`https://securetoken.googleapis.com/v1/token?key=${Keys.firebase}`,
+				{
+					refreshToken,
+					grantType: 'refresh_token',
+				}
+			)
+			.then((response) => {
+				dispatch({
+					type: FETCH_REFRESH_TOKEN,
+					token: response.data.id_token,
+					refreshToken: response.data.refresh_token,
+					userId: response.data.user_id,
+				});
+				saveDateToStorage(
+					response.data.id_token,
+					response.data.refresh_token
+				);
+			})
+			.catch((error) => {
+				console.log(
+					`catch fetchRefreshToken error =>`,
+					error.response.data.error
+				);
+				// throw new Error(error.response.data.error.message);
 			});
 	};
 };

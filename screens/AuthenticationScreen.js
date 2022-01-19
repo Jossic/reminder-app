@@ -26,7 +26,8 @@ const AuthenticationScreen = ({ navigation }) => {
 		formState: { errors },
 	} = useForm();
 
-	// const userId = useSelector((state) => state.userId);
+	const isAuth = useSelector((state) => state.userId);
+	console.log(`isAuth =>`, isAuth);
 
 	const dispatch = useDispatch();
 

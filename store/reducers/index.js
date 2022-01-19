@@ -8,6 +8,8 @@ import {
 	GET_PROJECTS,
 	START_LOADING,
 	SIGNUP,
+	SET_TRY_LOGIN,
+	FETCH_REFRESH_TOKEN,
 } from '../actions';
 import moment from 'moment';
 
@@ -17,6 +19,7 @@ const initialState = {
 	loadingNotes: false,
 	userId: null,
 	token: null,
+	didTryAutoLogin: false,
 };
 
 export default (state = initialState, action) => {
@@ -88,6 +91,18 @@ export default (state = initialState, action) => {
 				...state,
 				userId: action.userId,
 				token: action.token,
+			};
+		case SET_TRY_LOGIN:
+			return {
+				...state,
+				didTryAutoLogin: true,
+			};
+		case FETCH_REFRESH_TOKEN:
+			return {
+				...state,
+				userId: action.userId,
+				token: action.token,
+				didTryAutoLogin: true,
 			};
 		default:
 			return state;
