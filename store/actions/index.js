@@ -25,6 +25,7 @@ export const addProject = (project, userId, token) => {
 				const newProject = {
 					id: response.data.name,
 					name: project.name,
+					logo: project.logo,
 				};
 				dispatch({ type: ADD_PROJECT, project: newProject });
 			})
@@ -87,6 +88,7 @@ export const getProjects = (userId, token) => {
 					projects.push({
 						id: key,
 						name: response.data[key].name,
+						logo: response.data[key].logo,
 					});
 				}
 				dispatch({ type: GET_PROJECTS, projects });
