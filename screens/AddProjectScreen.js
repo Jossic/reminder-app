@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+	Alert,
 	Platform,
 	SafeAreaView,
 	StyleSheet,
@@ -13,6 +14,7 @@ import { Ionicons } from 'react-native-vector-icons';
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import * as globalActions from '../store/actions/index';
+import * as ImagePicker from 'expo-image-picker';
 
 const AddProjectScreen = ({ navigation }) => {
 	const {
@@ -34,6 +36,20 @@ const AddProjectScreen = ({ navigation }) => {
 
 		dispatch(globalActions.addProject(project, userId, token));
 		navigation.goBack();
+	};
+
+	const onPressPickerHandler = async () => {
+		if (Platform.OS !== 'web') {
+			const { status } =
+				await ImagePicker.requestCameraPermissionsAsync();
+
+			if (status !== 'granted') {
+				Alert.alert(
+					'Permission refusée',
+					"Si vous voulez ajouter une photo, merci d'accorder l'accès"
+				);
+			}
+		}
 	};
 
 	return (
@@ -64,7 +80,7 @@ const AddProjectScreen = ({ navigation }) => {
 				<TouchableOpacity
 					activeOpacity={0.8}
 					// style={styles.submit}
-					onPress={handleSubmit(onSubmit)}>
+					onPress={onPressPickerHandler}>
 					<View
 						style={{
 							...styles.inputContainer,
