@@ -11,7 +11,7 @@ import {
 import Colors from '../constants/Colors';
 import { Ionicons } from 'react-native-vector-icons';
 import { useForm, Controller } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as globalActions from '../store/actions/index';
 
 const AddNoteScreen = ({ navigation, route }) => {
@@ -24,6 +24,7 @@ const AddNoteScreen = ({ navigation, route }) => {
 	} = useForm();
 
 	const dispatch = useDispatch();
+	const userId = useSelector((state) => state.userId);
 
 	// Fonction
 	const onSubmit = (data) => {
@@ -34,7 +35,7 @@ const AddNoteScreen = ({ navigation, route }) => {
 			projectId: project.id,
 		};
 
-		dispatch(globalActions.addNote(note));
+		dispatch(globalActions.addNote(note, userId));
 		navigation.goBack();
 	};
 

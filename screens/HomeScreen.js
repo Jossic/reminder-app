@@ -25,11 +25,12 @@ const HomeScreen = ({ navigation }) => {
 	const state = useSelector((state) => state);
 	const { notes, projects } = state;
 	const loadingNotes = useSelector((state) => state.loadingNotes);
+	const userId = useSelector((state) => state.userId);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(globalActions.getNotes());
-		dispatch(globalActions.getProjects());
+		dispatch(globalActions.getNotes(userId));
+		dispatch(globalActions.getProjects(userId));
 	}, []);
 
 	if (loadingNotes) {

@@ -11,7 +11,7 @@ import {
 import Colors from '../constants/Colors';
 import { Ionicons } from 'react-native-vector-icons';
 import { useForm, Controller } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as globalActions from '../store/actions/index';
 
 const AddProjectScreen = ({ navigation }) => {
@@ -22,6 +22,7 @@ const AddProjectScreen = ({ navigation }) => {
 	} = useForm();
 
 	const dispatch = useDispatch();
+	const userId = useSelector((state) => state.userId);
 
 	// Fonction
 	const onSubmit = (data) => {
@@ -30,7 +31,7 @@ const AddProjectScreen = ({ navigation }) => {
 			name: data.name,
 		};
 
-		dispatch(globalActions.addProject(project));
+		dispatch(globalActions.addProject(project, userId));
 		navigation.goBack();
 	};
 

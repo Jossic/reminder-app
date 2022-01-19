@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import axios from '../../axios-instance';
 import Keys from '../../constants/Keys';
 
@@ -15,10 +16,10 @@ export const LOGOUT = 'LOGOUT';
 export const SET_TRY_LOGIN = 'SET_TRY_LOGIN';
 export const FETCH_REFRESH_TOKEN = 'FETCH_REFRESH_TOKEN';
 
-export const addProject = (project) => {
+export const addProject = (project, userId) => {
 	return (dispatch) => {
 		axios
-			.post('/projects.json', project)
+			.post(`/projects/${userId}.json`, project)
 			.then((response) => {
 				console.log(`response =>`, response);
 				const newProject = {
@@ -32,10 +33,10 @@ export const addProject = (project) => {
 			});
 	};
 };
-export const addNote = (note) => {
+export const addNote = (note, userId) => {
 	return (dispatch) => {
 		axios
-			.post('/notes.json', note)
+			.post(`/notes/${userId}.json`, note)
 			.then((response) => {
 				const newNote = {
 					id: response.data.name,
@@ -51,11 +52,11 @@ export const addNote = (note) => {
 	};
 };
 
-export const getNotes = () => {
+export const getNotes = (userId) => {
 	return (dispatch) => {
 		dispatch({ type: START_LOADING });
 		axios
-			.get('/notes.json')
+			.get(`/notes/${userId}.json`)
 			.then((response) => {
 				const notes = [];
 				for (const key in response.data) {
@@ -76,10 +77,10 @@ export const getNotes = () => {
 	};
 };
 
-export const getProjects = () => {
+export const getProjects = (userId) => {
 	return (dispatch) => {
 		axios
-			.get('/projects.json')
+			.get(`/projects/${userId}.json`)
 			.then((response) => {
 				const projects = [];
 				for (const key in response.data) {

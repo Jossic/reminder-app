@@ -105,7 +105,17 @@ const AuthenticationScreen = ({ navigation }) => {
 							Stockez toutes vos idées
 						</Text>
 
-						<View style={[styles.form, { marginTop: 50 }]}>
+						{loginMode ? (
+							<View style={styles.logView}>
+								<Text style={styles.log}>Connexion</Text>
+							</View>
+						) : (
+							<View style={styles.logView}>
+								<Text style={styles.log}>Inscription</Text>
+							</View>
+						)}
+
+						<View style={[styles.form, { marginTop: 30 }]}>
 							<Text style={styles.label}>Mail</Text>
 							<View style={[styles.inputContainer]}>
 								<Controller
@@ -284,5 +294,26 @@ const styles = StyleSheet.create({
 	switchButton: {
 		color: 'white',
 		marginTop: 30,
+	},
+	log: {
+		color: 'white',
+		fontSize: 20,
+	},
+	logView: {
+		marginTop: 20,
+		backgroundColor: Colors.primaryFaded,
+		borderRadius: 15,
+		padding: 10,
+		width: 150,
+		alignItems: 'center',
+		justifyContent: 'center',
+		shadowColor: '#000',
+		shadowOffset: {
+			width: 0,
+			height: 1,
+		},
+		shadowOpacity: 0.5,
+		shadowRadius: 1,
+		elevation: 2,
 	},
 });
