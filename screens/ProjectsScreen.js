@@ -21,6 +21,8 @@ const ProjectsScreen = ({ navigation }) => {
 	const projects = useSelector((state) => state.projects);
 	const notes = useSelector((state) => state.notes);
 	const dispatch = useDispatch();
+	const userId = useSelector((state) => state.userId);
+	const token = useSelector((state) => state.token);
 
 	const onLogoutPressHandler = () => {
 		dispatch(globalActions.logout());
@@ -37,9 +39,13 @@ const ProjectsScreen = ({ navigation }) => {
 						(note) => note.projectId === projectId
 					);
 					projectsNotes.forEach((note) => {
-						dispatch(globalActions.deleteNote(note.id));
+						dispatch(
+							globalActions.deleteNote(note.id, userId, token)
+						);
 					});
-					dispatch(globalActions.deleteProject(projectId));
+					dispatch(
+						globalActions.deleteProject(projectId, userId, token)
+					);
 				},
 			},
 		]);

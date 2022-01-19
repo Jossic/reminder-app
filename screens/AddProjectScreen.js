@@ -23,6 +23,7 @@ const AddProjectScreen = ({ navigation }) => {
 
 	const dispatch = useDispatch();
 	const userId = useSelector((state) => state.userId);
+	const token = useSelector((state) => state.token);
 
 	// Fonction
 	const onSubmit = (data) => {
@@ -31,7 +32,7 @@ const AddProjectScreen = ({ navigation }) => {
 			name: data.name,
 		};
 
-		dispatch(globalActions.addProject(project, userId));
+		dispatch(globalActions.addProject(project, userId, token));
 		navigation.goBack();
 	};
 

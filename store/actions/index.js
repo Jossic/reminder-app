@@ -16,10 +16,10 @@ export const LOGOUT = 'LOGOUT';
 export const SET_TRY_LOGIN = 'SET_TRY_LOGIN';
 export const FETCH_REFRESH_TOKEN = 'FETCH_REFRESH_TOKEN';
 
-export const addProject = (project, userId) => {
+export const addProject = (project, userId, token) => {
 	return (dispatch) => {
 		axios
-			.post(`/projects/${userId}.json`, project)
+			.post(`/projects/${userId}.json?auth=${token}`, project)
 			.then((response) => {
 				console.log(`response =>`, response);
 				const newProject = {
@@ -33,10 +33,10 @@ export const addProject = (project, userId) => {
 			});
 	};
 };
-export const addNote = (note, userId) => {
+export const addNote = (note, userId, token) => {
 	return (dispatch) => {
 		axios
-			.post(`/notes/${userId}.json`, note)
+			.post(`/notes/${userId}.json?auth=${token}`, note)
 			.then((response) => {
 				const newNote = {
 					id: response.data.name,
@@ -52,11 +52,11 @@ export const addNote = (note, userId) => {
 	};
 };
 
-export const getNotes = (userId) => {
+export const getNotes = (userId, token) => {
 	return (dispatch) => {
 		dispatch({ type: START_LOADING });
 		axios
-			.get(`/notes/${userId}.json`)
+			.get(`/notes/${userId}.json?auth=${token}`)
 			.then((response) => {
 				const notes = [];
 				for (const key in response.data) {
@@ -77,10 +77,10 @@ export const getNotes = (userId) => {
 	};
 };
 
-export const getProjects = (userId) => {
+export const getProjects = (userId, token) => {
 	return (dispatch) => {
 		axios
-			.get(`/projects/${userId}.json`)
+			.get(`/projects/${userId}.json?auth=${token}`)
 			.then((response) => {
 				const projects = [];
 				for (const key in response.data) {
@@ -97,19 +97,23 @@ export const getProjects = (userId) => {
 	};
 };
 
-export const deleteNote = (noteId) => {
+export const deleteNote = (noteId, userId, token) => {
 	return (dispatch) => {
-		axios.delete(`/notes/${noteId}.json`).then((response) => {
-			dispatch({ type: DELETE_NOTE, noteId });
-		});
+		axios
+			.delete(`/notes/${userId}/${noteId}.json?auth=${token}`)
+			.then((response) => {
+				dispatch({ type: DELETE_NOTE, noteId });
+			});
 	};
 };
 
-export const deleteProject = (projectId) => {
+export const deleteProject = (projectId, userId, token) => {
 	return (dispatch) => {
-		axios.delete(`/projects/${projectId}.json`).then((response) => {
-			dispatch({ type: DELETE_PROJECT, projectId });
-		});
+		axios
+			.delete(`/projects/${userId}/${projectId}.json?auth=${token}`)
+			.then((response) => {
+				dispatch({ type: DELETE_PROJECT, projectId });
+			});
 	};
 };
 

@@ -25,6 +25,7 @@ const AddNoteScreen = ({ navigation, route }) => {
 
 	const dispatch = useDispatch();
 	const userId = useSelector((state) => state.userId);
+	const token = useSelector((state) => state.token);
 
 	// Fonction
 	const onSubmit = (data) => {
@@ -35,7 +36,7 @@ const AddNoteScreen = ({ navigation, route }) => {
 			projectId: project.id,
 		};
 
-		dispatch(globalActions.addNote(note, userId));
+		dispatch(globalActions.addNote(note, userId, token));
 		navigation.goBack();
 	};
 

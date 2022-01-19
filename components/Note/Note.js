@@ -1,18 +1,22 @@
 import React from 'react';
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Colors from '../../constants/Colors';
 import * as globalActions from '../../store/actions/index';
 
 const Note = ({ item }) => {
 	const dispatch = useDispatch();
+	const userId = useSelector((state) => state.userId);
+	const token = useSelector((state) => state.token);
+
 	const onPressHandler = () => {
 		Alert.alert('Que souhaitez-vous faire ?', undefined, [
 			{ text: 'Annuler', style: 'cancel' },
 			{
 				text: 'Supprimer',
 				style: 'destructive',
-				onPress: () => dispatch(globalActions.deleteNote(item.id)),
+				onPress: () =>
+					dispatch(globalActions.deleteNote(item.id, userId, token)),
 			},
 		]);
 	};
