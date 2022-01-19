@@ -63,6 +63,28 @@ const AddProjectScreen = ({ navigation }) => {
 
 				<TouchableOpacity
 					activeOpacity={0.8}
+					// style={styles.submit}
+					onPress={handleSubmit(onSubmit)}>
+					<View
+						style={{
+							...styles.inputContainer,
+							marginTop: 15,
+							flexDirection: 'row',
+							alignItems: 'center',
+						}}>
+						<Ionicons
+							name='images'
+							size={23}
+							color={Colors.primary}
+						/>
+						<Text style={{ marginLeft: 15 }}>
+							Ajouter une image
+						</Text>
+					</View>
+				</TouchableOpacity>
+
+				<TouchableOpacity
+					activeOpacity={0.8}
 					style={styles.submit}
 					onPress={handleSubmit(onSubmit)}>
 					<Text style={styles.submitText}>Créer</Text>
