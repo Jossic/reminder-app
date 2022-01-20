@@ -1,5 +1,6 @@
 export default {
-	primary: '#8F79FC',
-	primaryFaded: 'rgba(169,149,244,.1)',
+	primary: '#9932CC',
+	primaryFaded: 'rgba(153,50,204,.1)',
 	secondary: '#FBFAFF',
+	linear: ['#A996F2', '#9932CC'],
 };

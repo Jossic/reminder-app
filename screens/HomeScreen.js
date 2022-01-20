@@ -89,7 +89,7 @@ const HomeScreen = ({ navigation }) => {
 									navigation.navigate('TabProjects')
 								}>
 								<LinearGradient
-									colors={['#A996F2', '#8F79FC']}
+									colors={Colors.linear}
 									style={styles.addButton}>
 									<Text style={styles.addButtonText}>
 										Voir mes projets

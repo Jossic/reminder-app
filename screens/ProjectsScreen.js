@@ -78,7 +78,7 @@ const ProjectsScreen = ({ navigation }) => {
 							activeOpacity={0.8}
 							onPress={() => navigation.navigate('addProject')}>
 							<LinearGradient
-								colors={['#A996F2', '#8F79FC']}
+								colors={Colors.linear}
 								style={styles.addButton}>
 								<Text style={styles.addButtonText}>
 									Créer un projet

@@ -21,6 +21,8 @@ const ProjectScreen = ({ route, navigation }) => {
 		(note) => note.projectId === project.id
 	);
 
+	// console.log(`project =>`, project);
+
 	return (
 		<View style={styles.container}>
 			<SafeAreaView style={{ flex: 1 }}>
@@ -30,8 +32,71 @@ const ProjectScreen = ({ route, navigation }) => {
 					onPress={() => navigation.goBack()}>
 					<Ionicons name='arrow-back' size={23} color='white' />
 				</TouchableOpacity>
-				<Text style={styles.title}>{project.name}</Text>
-				{notes[0] ? (
+
+				<FlatList
+					data={notes}
+					renderItem={({ item }) => <Note item={item} />}
+					ListHeaderComponent={() => (
+						<>
+							<View style={styles.header}>
+								<Image
+									source={
+										project.logo
+											? { uri: project.logo }
+											: require('../assets/default-logo.jpeg')
+									}
+									style={styles.logo}
+								/>
+
+								<Text style={styles.title}>{project.name}</Text>
+							</View>
+							{notes[0] ? (
+								<TouchableOpacity
+									activeOpacity={0.8}
+									style={{ marginBottom: 30 }}
+									onPress={() =>
+										navigation.navigate('addNote', {
+											project,
+										})
+									}>
+									<View style={styles.smallAddButton}>
+										<Text style={styles.smallAddButtonText}>
+											Ajouter
+										</Text>
+									</View>
+								</TouchableOpacity>
+							) : (
+								<>
+									<Image
+										source={require('../assets/empty.png')}
+										style={styles.image}
+									/>
+									<Text>
+										Commecez par ajouter votre première
+										note.
+									</Text>
+									<TouchableOpacity
+										activeOpacity={0.8}
+										onPress={() =>
+											navigation.navigate('addNote', {
+												project,
+											})
+										}>
+										<LinearGradient
+											colors={Colors.linear}
+											style={styles.addButton}>
+											<Text style={styles.addButtonText}>
+												Ajouter une note
+											</Text>
+										</LinearGradient>
+									</TouchableOpacity>
+								</>
+							)}
+						</>
+					)}
+				/>
+
+				{/* {notes[0] ? (
 					<>
 						<TouchableOpacity
 							activeOpacity={0.8}
@@ -63,7 +128,7 @@ const ProjectScreen = ({ route, navigation }) => {
 								navigation.navigate('addNote', { project })
 							}>
 							<LinearGradient
-								colors={['#A996F2', '#8F79FC']}
+								colors={Colors.linear}
 								style={styles.addButton}>
 								<Text style={styles.addButtonText}>
 									Ajouter une note
@@ -71,7 +136,7 @@ const ProjectScreen = ({ route, navigation }) => {
 							</LinearGradient>
 						</TouchableOpacity>
 					</>
-				)}
+				)} */}
 			</SafeAreaView>
 		</View>
 	);
@@ -97,7 +162,8 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 30,
 		fontWeight: 'bold',
-		marginVertical: 30,
+		marginTop: 15,
+		color: 'white',
 	},
 	image: {
 		width: 350,
@@ -124,5 +190,19 @@ const styles = StyleSheet.create({
 	},
 	smallAddButtonText: {
 		color: 'white',
+	},
+	logo: {
+		width: 100,
+		height: 100,
+		borderRadius: 50,
+		alignSelf: 'center',
+	},
+	header: {
+		backgroundColor: Colors.primary,
+		marginTop: 15,
+		borderRadius: 15,
+		padding: 10,
+		alignItems: 'center',
+		marginBottom: 15,
 	},
 });
