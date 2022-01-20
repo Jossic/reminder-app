@@ -34,37 +34,40 @@ export default function App() {
 				finalStatus = requestStatus;
 			}
 
-			const message = {
-				to: 'ExponentPushToken[TW9iZjDtHeGSGuU1yXiZc4]',
-				title: 'Ma notification',
-				body: 'Message de la notif',
-				data: {
-					target: 'projects',
-				},
-			};
+			await Notifications.setBadgeCountAsync(0);
 
-			await fetch('https://exp.host/--/api/v2/push/send', {
-				method: 'post',
-				headers: {
-					Accept: 'application/json',
-					'Accept-encoding': 'gzip, deflate',
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(message),
-			});
+			// const message = {
+			// 	to: 'ExponentPushToken[TW9iZjDtHeGSGuU1yXiZc4]',
+			// 	title: 'Ma notification',
+			// 	body: 'Message de la notif',
+			// 	data: {
+			// 		target: 'projects',
+			// 	},
+			// };
+
+			// await fetch('https://exp.host/--/api/v2/push/send', {
+			// 	method: 'post',
+			// 	headers: {
+			// 		Accept: 'application/json',
+			// 		'Accept-encoding': 'gzip, deflate',
+			// 		'Content-Type': 'application/json',
+			// 	},
+			// 	body: JSON.stringify(message),
+			// });
 		};
 		getPermissions();
 
 		// Notifications.addNotificationReceivedListener(handleNotification); // Rarement utilisé (1)
 
-		Notifications.addNotificationResponseReceivedListener(
-			handleNotificationResponse
-		);
+		// Notifications.addNotificationResponseReceivedListener(
+		// 	handleNotificationResponse
+		// );
 	}, []);
 
 	const handleNotification = async (notification) => {
 		// setNotification(notification); // Stocker dans un state (1)
 	};
+
 	const handleNotificationResponse = async (response) => {
 		// Permet de passer un object dans data lorsqu'on ouvre la notif
 		console.log(
