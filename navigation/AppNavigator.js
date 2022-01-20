@@ -15,8 +15,6 @@ export const AppNavigator = () => {
 
 	const getDeviceToken = async () => {
 		const deviceToken = await Notifications.getExpoPushTokenAsync();
-
-		console.log(`deviceToken =>`, deviceToken);
 	};
 
 	if (isAuth) {

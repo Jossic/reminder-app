@@ -68,60 +68,54 @@ const HomeScreen = ({ navigation }) => {
 	return (
 		<View style={styles.container}>
 			<SafeAreaView style={{ flex: 1 }}>
-				<ScrollView>
-					<Text style={styles.date}>{date}</Text>
-					<View style={styles.cards}>
-						<TouchableWithoutFeedback onPress={onCardPressHandler}>
-							<LinearGradient
-								colors={['#ED89AF', '#F45384']}
-								style={styles.card}>
-								<Text style={styles.cardNumber}>
-									{notes.length}
-								</Text>
-								<Text style={styles.cardText}>Notes</Text>
-							</LinearGradient>
-						</TouchableWithoutFeedback>
+				<Text style={styles.date}>{date}</Text>
+				<View style={styles.cards}>
+					<TouchableWithoutFeedback onPress={onCardPressHandler}>
 						<LinearGradient
-							colors={['#FED3A0', '#FFA63E']}
+							colors={['#ED89AF', '#F45384']}
 							style={styles.card}>
 							<Text style={styles.cardNumber}>
-								{projects.length}
+								{notes.length}
 							</Text>
-							<Text style={styles.cardText}>Projets</Text>
+							<Text style={styles.cardText}>Notes</Text>
 						</LinearGradient>
-					</View>
-					<Text style={styles.title}>Notes ({notes.length})</Text>
-					{!notes[0] ? (
-						<>
-							<Image
-								source={require('../assets/empty.png')}
-								style={styles.image}
-							/>
-							<Text>
-								Commencez par créer votre premier projet pour
-								ajouter votre première note par la suite.
-							</Text>
-							<TouchableOpacity
-								activeOpacity={0.8}
-								onPress={() =>
-									navigation.navigate('TabProjects')
-								}>
-								<LinearGradient
-									colors={Colors.linear}
-									style={styles.addButton}>
-									<Text style={styles.addButtonText}>
-										Voir mes projets
-									</Text>
-								</LinearGradient>
-							</TouchableOpacity>
-						</>
-					) : (
-						<FlatList
-							data={notes}
-							renderItem={({ item }) => <Note item={item} />}
+					</TouchableWithoutFeedback>
+					<LinearGradient
+						colors={['#FED3A0', '#FFA63E']}
+						style={styles.card}>
+						<Text style={styles.cardNumber}>{projects.length}</Text>
+						<Text style={styles.cardText}>Projets</Text>
+					</LinearGradient>
+				</View>
+				<Text style={styles.title}>Notes ({notes.length})</Text>
+				{!notes[0] ? (
+					<>
+						<Image
+							source={require('../assets/empty.png')}
+							style={styles.image}
 						/>
-					)}
-				</ScrollView>
+						<Text>
+							Commencez par créer votre premier projet pour
+							ajouter votre première note par la suite.
+						</Text>
+						<TouchableOpacity
+							activeOpacity={0.8}
+							onPress={() => navigation.navigate('TabProjects')}>
+							<LinearGradient
+								colors={Colors.linear}
+								style={styles.addButton}>
+								<Text style={styles.addButtonText}>
+									Voir mes projets
+								</Text>
+							</LinearGradient>
+						</TouchableOpacity>
+					</>
+				) : (
+					<FlatList
+						data={notes}
+						renderItem={({ item }) => <Note item={item} />}
+					/>
+				)}
 			</SafeAreaView>
 		</View>
 	);
