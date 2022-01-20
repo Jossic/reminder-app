@@ -10,11 +10,14 @@ import {
 	TouchableOpacity,
 	View,
 	ActivityIndicator,
+	TouchableWithoutFeedback,
+	Alert,
 } from 'react-native';
 import moment from 'moment';
 import 'moment/locale/fr';
 import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '../constants/Colors';
+import * as Notifications from 'expo-notifications';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -47,6 +50,19 @@ const HomeScreen = ({ navigation }) => {
 		);
 	}
 
+	const onCardPressHandler = async () => {
+		await Notifications.scheduleNotificationAsync({
+			content: {
+				title: 'Ma notification !',
+				body: 'lorem lorem',
+				data: null,
+			},
+			trigger: {
+				seconds: 5,
+			},
+		});
+	};
+
 	// Variables
 	const date = moment().format('LL');
 	return (
@@ -55,14 +71,16 @@ const HomeScreen = ({ navigation }) => {
 				<ScrollView>
 					<Text style={styles.date}>{date}</Text>
 					<View style={styles.cards}>
-						<LinearGradient
-							colors={['#ED89AF', '#F45384']}
-							style={styles.card}>
-							<Text style={styles.cardNumber}>
-								{notes.length}
-							</Text>
-							<Text style={styles.cardText}>Notes</Text>
-						</LinearGradient>
+						<TouchableWithoutFeedback onPress={onCardPressHandler}>
+							<LinearGradient
+								colors={['#ED89AF', '#F45384']}
+								style={styles.card}>
+								<Text style={styles.cardNumber}>
+									{notes.length}
+								</Text>
+								<Text style={styles.cardText}>Notes</Text>
+							</LinearGradient>
+						</TouchableWithoutFeedback>
 						<LinearGradient
 							colors={['#FED3A0', '#FFA63E']}
 							style={styles.card}>
