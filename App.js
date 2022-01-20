@@ -17,7 +17,7 @@ Notifications.setNotificationHandler({
 	handleNotification: async () => ({
 		shouldShowAlert: true, // Faire apparaitre la notif meme quand on est sur l'app
 		shouldPlaySound: false, // Jouer un son
-		shouldSetBadge: true, // Badge si plusieurs notifs push
+		shouldSetBadge: false, // Badge si plusieurs notifs push
 	}),
 });
 
