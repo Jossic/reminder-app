@@ -33,6 +33,22 @@ export default function App() {
 					await Notifications.requestPermissionsAsync();
 				finalStatus = requestStatus;
 			}
+
+			// const message = {
+			// 	to: 'ExponentPushToken[TW9iZjDtHeGSGuU1yXiZc4]',
+			// 	title: 'Ma notification',
+			// 	body: 'Message de la notif',
+			// };
+
+			// await fetch('https://exp.host/--/api/v2/push/send', {
+			// 	method: 'post',
+			// 	headers: {
+			// 		Accept: 'application/json',
+			// 		'Accept-encoding': 'gzip, deflate',
+			// 		'Content-Type': 'application/json',
+			// 	},
+			// 	body: JSON.stringify(message),
+			// });
 		};
 		getPermissions();
 	}, []);
