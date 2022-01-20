@@ -37,12 +37,14 @@ export default function App() {
 			await Notifications.setBadgeCountAsync(0);
 
 			// const message = {
-			// 	to: 'ExponentPushToken[TW9iZjDtHeGSGuU1yXiZc4]',
+			// 	to: 'ExponentPushToken[TW9iZjDtHeGSGuU1yXiZc4]', // onePlus 5
 			// 	title: 'Ma notification',
 			// 	body: 'Message de la notif',
 			// 	data: {
 			// 		target: 'projects',
 			// 	},
+			// badge: 5,
+			// sound: "default"
 			// };
 
 			// await fetch('https://exp.host/--/api/v2/push/send', {
