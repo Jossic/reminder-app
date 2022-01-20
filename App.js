@@ -13,6 +13,14 @@ import { AppNavigator } from './navigation/AppNavigator';
 
 const store = createStore(globalReducer, applyMiddleware(thunk));
 
+Notifications.setNotificationHandler({
+	handleNotification: async () => ({
+		shouldShowAlert: true, // Faire apparaitre la notif meme quand on est sur l'app
+		shouldPlaySound: false, // Jouer un son
+		shouldSetBadge: true, // Badge si plusieurs notifs push
+	}),
+});
+
 export default function App() {
 	useEffect(() => {
 		const getPermissions = async () => {
